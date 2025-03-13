@@ -34,14 +34,14 @@ const homeBottomCardData = [
 const abtUpperCard = [
   {
     id: 7,
-    imgSrc: "/Images/abt_imgs/explore.png",
+    imgSrc: "/images/abt_imgs/explore.png",
     imgAlt: "abt card",
     title: "Explore",
     description: "Find and research top hospitals & destinations   ",
   },
   {
     id: 8,
-    imgSrc: "/Images/abt_imgs/heart.png",
+    imgSrc: "/images/abt_imgs/heart.png",
     imgAlt: "abt card",
     title: "Match",
     description:
@@ -49,7 +49,7 @@ const abtUpperCard = [
   },
   {
     id: 9,
-    imgSrc: "/Images/abt_imgs/arrange.png",
+    imgSrc: "/images/abt_imgs/arrange.png",
     imgAlt: "abt card",
     title: "Arrange",
     description:
@@ -57,7 +57,7 @@ const abtUpperCard = [
   },
   {
     id: 10,
-    imgSrc: "/Images/abt_imgs/care.png",
+    imgSrc: "/images/abt_imgs/care.png",
     imgAlt: "abt card",
     title: "Treat",
     description:
@@ -68,19 +68,19 @@ const abtUpperCard = [
 const abtBottomCard = [
   {
     id: "11",
-    imgSrc: "/Images/abt_imgs/patients.png",
+    imgSrc: "/images/abt_imgs/patients.png",
     imgAlt: "patients",
     description: "50+ patients have used Dochub services",
   },
   {
     id: "12",
-    imgSrc: "/Images/abt_imgs/hospitals.png",
+    imgSrc: "/images/abt_imgs/hospitals.png",
     imgAlt: "hospitals",
     description: "50+ Hospitals Across Gujarat",
   },
   {
     id: "13",
-    imgSrc: "/Images/abt_imgs/doctors.png",
+    imgSrc: "/images/abt_imgs/doctors.png",
     imgAlt: "doctors",
     description: "50+ Specialists Doctors Available",
   },

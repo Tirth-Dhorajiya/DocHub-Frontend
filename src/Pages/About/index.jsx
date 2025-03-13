@@ -24,7 +24,7 @@ export default function About() {
         <Row className="justify-content-center align-items-center">
           <Col lg={6} md={12} sm={12}>
             <img
-              src="\Images\abt_imgs\about-img.jpg"
+              src="\images\abt_imgs\about-img.jpg"
               alt=""
               className="d-flex mw-100 justify-content-center"
             />
