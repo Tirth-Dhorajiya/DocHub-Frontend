@@ -19,6 +19,7 @@ import { toast } from "react-toastify";
 import Footer from "../../common/Footer/Footer";
 import Header from "../../common/Header/Header";
 import symptomToSpecialty from "./Symptoms";
+import { BeatLoader } from "react-spinners";
 
 export default function Bookapp() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -40,6 +41,7 @@ export default function Bookapp() {
   const [selectedSymptom, setSelectedSymptom] = useState(""); // State for selected symptom
   const [filteredHospitals, setFilteredHospitals] = useState([]);
   const [filteredDoctors, setFilteredDoctors] = useState([]);
+  const [loading, setLoading] = useState(true); // Loading state
   const [doctorsData, setDoctorsData] = useState([]); // State to store fetched doctor data
   const navigate = useNavigate();
 
@@ -55,8 +57,10 @@ export default function Bookapp() {
         setFilteredHospitals([
           ...new Set(response.data.map((doctor) => doctor.hospital)),
         ]);
+        setLoading(false); // Set loading to false after data is fetched
       } catch (error) {
         console.error("Error fetching doctors:", error);
+        setLoading(false); // Set loading to false in case of error
       }
     };
     fetchDoctors();
@@ -245,6 +249,13 @@ export default function Bookapp() {
     return slots;
   };
 
+  if (loading)
+    return (
+      <BeatLoader
+        color="#6c63ff"
+        className="d-flex justify-content-center align-items-center vh-100"
+      />
+    );
   return (
     <>
       <Header />
