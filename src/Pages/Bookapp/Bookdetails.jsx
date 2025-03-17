@@ -32,7 +32,6 @@ export default function Bookdetails() {
   //       className="d-flex justify-content-center align-items-center vh-100"
   //     />
   //   );
-  if (!doctor) return <h2>Doctor not found</h2>;
 
   return (
     <>
