@@ -5,6 +5,7 @@ import Header from "../../common/Header/Header";
 import { Col, Container, Row } from "react-bootstrap";
 import Slot from "./Slot";
 import Footer from "../../common/Footer/Footer";
+import { GridLoader } from "react-spinners";
 
 export default function Bookdetails() {
   const { id } = useParams(); // Get doctor ID from the URL
@@ -24,7 +25,7 @@ export default function Bookdetails() {
       });
   }, [id]);
 
-  if (loading) return <h2>Loading...</h2>;
+  if (loading) return <GridLoader color="#6c63ff" size={15} margin={2} />;
   if (!doctor) return <h2>Doctor not found</h2>;
 
   return (
