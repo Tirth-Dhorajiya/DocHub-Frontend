@@ -29,8 +29,6 @@ export default function Bookdetails() {
     return (
       <BeatLoader
         color="#6c63ff"
-        size={15}
-        margin={2}
         className="d-flex justify-content-center align-items-center"
       />
     );
