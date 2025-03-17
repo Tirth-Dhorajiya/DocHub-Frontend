@@ -1,0 +1,22 @@
+.readBtn {
+  padding: 10px;
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 8px;
+  border: none;
+  font-weight: bold;
+}
+.readBtn:hover {
+  background-color: var(--secondary-color);
+  box-shadow: 0 0 10px gray;
+}
+.abtHeading::before {
+  content: "";
+  clear: both;
+  display: table;
+  height: 5px;
+  width: 70px;
+  margin-top: 10px;
+  background-color: var(--secondary-color);
+  margin: 0 auto 12px;
+}
