@@ -175,17 +175,20 @@ export default function Bookapp() {
     if (validateForm()) {
       try {
         console.log("Form Data:", formData); // Log form data
-        await axios.post("http://localhost:5000/api/appointments", {
-          userEmail,
-          name: formData.name,
-          phone: formData.phone,
-          appointmentDate: formData.appointmentDate,
-          hospital: formData.hospital,
-          doctor: formData.doctor,
-          timeSlot: formData.timeSlot,
-          age: formData.age,
-          gender: formData.gender,
-        });
+        await axios.post(
+          "https://doc-hub-backend.vercel.app/api/appointments",
+          {
+            userEmail,
+            name: formData.name,
+            phone: formData.phone,
+            appointmentDate: formData.appointmentDate,
+            hospital: formData.hospital,
+            doctor: formData.doctor,
+            timeSlot: formData.timeSlot,
+            age: formData.age,
+            gender: formData.gender,
+          }
+        );
         setShowSuccessModal(true);
         setFormData({
           name: "",

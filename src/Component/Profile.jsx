@@ -39,17 +39,17 @@ const Profile = () => {
   useEffect(() => {
     if (userEmail) {
       axios
-        .get(`http://localhost:5000/api/user/${userEmail}`)
+        .get(`https://doc-hub-backend.vercel.app/api/user/${userEmail}`)
         .then((response) => setUserData(response.data))
         .catch((error) => console.error("Error fetching user data:", error));
 
       axios
-        .get(`http://localhost:5000/api/appointments/${userEmail}`)
+        .get(`https://doc-hub-backend.vercel.app/api/appointments/${userEmail}`)
         .then((response) => setAppointments(response.data))
         .catch((error) => console.error("Error fetching appointments:", error));
 
       axios
-        .get(`http://localhost:5000/api/slots/${userEmail}`) // Fetch slots
+        .get(`https://doc-hub-backend.vercel.app/api/slots/${userEmail}`) // Fetch slots
         .then((response) => setSlots(response.data))
         .catch((error) => console.error("Error fetching slots:", error));
     }
@@ -98,12 +98,12 @@ const Profile = () => {
   const handleSave = async () => {
     try {
       const response = await axios.put(
-        `http://localhost:5000/api/user/update/${userEmail}`,
+        `https://doc-hub-backend.vercel.app/api/user/update/${userEmail}`,
         userData
       );
       console.log("Update response:", response.data);
       const updatedResponse = await axios.get(
-        `http://localhost:5000/api/user/${userEmail}`
+        `https://doc-hub-backend.vercel.app/api/user/${userEmail}`
       );
       setUserData(updatedResponse.data);
       localStorage.setItem("userData", JSON.stringify(updatedResponse.data)); // Save to localStorage
@@ -125,7 +125,7 @@ const Profile = () => {
   const handleCancelAppointment = async (appointmentId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/appointments/${appointmentId}`
+        `https://doc-hub-backend.vercel.app/api/appointments/${appointmentId}`
       );
       console.log("Delete response:", response.data);
       setAppointments(
@@ -146,7 +146,7 @@ const Profile = () => {
   const handleCancelSlot = async (slotId) => {
     try {
       const response = await axios.delete(
-        `http://localhost:5000/api/slots/${slotId}`
+        `https://doc-hub-backend.vercel.app/api/slots/${slotId}`
       );
       console.log("Delete response:", response.data);
       setSlots(slots.filter((slot) => slot._id !== slotId));

@@ -40,7 +40,7 @@ export default function DoctorDashboard() {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/doctors/email/${doctorEmail}`
+          `https://doc-hub-backend.vercel.app/api/doctors/email/${doctorEmail}`
         );
         if (response.data) {
           setDoctorName(response.data.name);
@@ -67,7 +67,7 @@ export default function DoctorDashboard() {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/appointments/doctor/${doctorId}`
+          `https://doc-hub-backend.vercel.app/api/appointments/doctor/${doctorId}`
         );
         setAppointments(response.data);
       } catch (error) {
@@ -85,7 +85,7 @@ export default function DoctorDashboard() {
 
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/slots/doctor/${doctorId}`
+          `https://doc-hub-backend.vercel.app/api/slots/doctor/${doctorId}`
         );
         setSlots(response.data);
       } catch (error) {
