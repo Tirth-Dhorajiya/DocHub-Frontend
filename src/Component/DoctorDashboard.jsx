@@ -150,11 +150,12 @@ export default function DoctorDashboard() {
             <BeatLoader color="#2196F3" loading={loading} size={15} />
           </div>
         ) : (
-          // <h4 className="text-custom">
-          //    <strong>Doctor Dashboard</strong>
-          // </h4>
           <Row>
             {/* Left Side: Doctor Profile */}
+            <h4 className="text-custom">
+              <strong>Doctor Dashboard</strong>
+            </h4>
+
             <Col md={12} lg={4}>
               <Card className="profile-card">
                 <Card.Body className="text-center">
