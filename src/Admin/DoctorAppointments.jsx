@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Table, Container, Row, Col, Button } from "react-bootstrap";
+import { BeatLoader } from "react-spinners";
 import Header from "../common/Header/Header";
 import Footer from "../common/Footer/Footer";
 
@@ -9,9 +10,11 @@ export default function DoctorAppointments() {
   const { doctorId } = useParams();
   const [appointments, setAppointments] = useState([]);
   const [slots, setSlots] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchAppointments = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `https://doc-hub-backend.vercel.app/api/appointments/doctor/${doctorId}`
@@ -28,10 +31,13 @@ export default function DoctorAppointments() {
         setAppointments(updatedAppointments);
       } catch (error) {
         console.error("Error fetching appointments:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
     const fetchSlots = async () => {
+      setLoading(true);
       try {
         const response = await axios.get(
           `https://doc-hub-backend.vercel.app/api/slots/doctor/${doctorId}`
@@ -48,6 +54,8 @@ export default function DoctorAppointments() {
         setSlots(updatedSlots);
       } catch (error) {
         console.error("Error fetching slots:", error);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -82,48 +90,57 @@ export default function DoctorAppointments() {
     <>
       <Header />
       <Container className="mt-5">
-        <Row>
-          <Col>
-            <h2>Appointments and Slots for Doctor</h2>
-            <Table striped bordered hover responsive className="mt-3">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Time Slot</th>
-                  <th>Name</th>
-                  <th>Mobile</th>
-                  <th>Age</th>
-                  <th>Gender</th>
-                  <th>Status</th>
-                </tr>
-              </thead>
-              <tbody>
-                {mergedData.map((item) => (
-                  <tr key={item._id}>
-                    <td>{item.appointmentDate}</td>
-                    <td>{item.timeSlot}</td>
-                    <td>{item.name}</td>
-                    <td>{item.phone}</td>
-                    <td>{item.age}</td>
-                    <td>{item.gender}</td>
-                    <td
-                      className={
-                        item.status === "Completed"
-                          ? "text-success"
-                          : "text-danger"
-                      }
-                    >
-                      {item.status}
-                    </td>
+        {loading ? (
+          <div
+            className="d-flex justify-content-center align-items-center"
+            style={{ height: "60vh" }}
+          >
+            <BeatLoader color="#2196F3" loading={loading} size={15} />
+          </div>
+        ) : (
+          <Row>
+            <Col>
+              <h2>Appointments and Slots for Doctor</h2>
+              <Table striped bordered hover responsive className="mt-3">
+                <thead>
+                  <tr>
+                    <th>Date</th>
+                    <th>Time Slot</th>
+                    <th>Name</th>
+                    <th>Mobile</th>
+                    <th>Age</th>
+                    <th>Gender</th>
+                    <th>Status</th>
                   </tr>
-                ))}
-              </tbody>
-            </Table>
-            <Button variant="secondary" onClick={() => window.history.back()}>
-              Back
-            </Button>
-          </Col>
-        </Row>
+                </thead>
+                <tbody>
+                  {mergedData.map((item) => (
+                    <tr key={item._id}>
+                      <td>{item.appointmentDate}</td>
+                      <td>{item.timeSlot}</td>
+                      <td>{item.name}</td>
+                      <td>{item.phone}</td>
+                      <td>{item.age}</td>
+                      <td>{item.gender}</td>
+                      <td
+                        className={
+                          item.status === "Completed"
+                            ? "text-success"
+                            : "text-danger"
+                        }
+                      >
+                        {item.status}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+              <Button variant="secondary" onClick={() => window.history.back()}>
+                Back
+              </Button>
+            </Col>
+          </Row>
+        )}
       </Container>
       <Footer />
     </>
