@@ -124,19 +124,19 @@ export default function Footer() {
                   <h2 className="footer-title">Helpful Links</h2>
                   <ul className="list-unstyled p-left-0">
                     <li>
-                      <Link to={"/book-appoinment"}>Book Appoinment</Link>
+                      <Link to={"/book-appointment"}>Book Appoinment</Link>
                     </li>
                     <li>
-                      <Link to={"/book-appoinment"}>Search for doctors</Link>
+                      <Link to={"/book-appointment"}>Search for doctors</Link>
                     </li>
                     <li>
-                      <Link to={"/book-appoinment"}>Search for hospitals</Link>
+                      <Link to={"/book-appointment"}>Search for hospitals</Link>
                     </li>
                     <li>
-                      <Link to={"/book-appoinment"}>SMS Booking</Link>
+                      <Link to={"/book-appointment"}>SMS Booking</Link>
                     </li>
                     <li>
-                      <Link to={"/book-appoinment"}>Services</Link>
+                      <Link to={"/book-appointment"}>Services</Link>
                     </li>
                   </ul>
                 </div>
