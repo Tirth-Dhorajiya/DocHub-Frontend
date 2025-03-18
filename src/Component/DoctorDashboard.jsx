@@ -212,7 +212,11 @@ export default function DoctorDashboard() {
                       />
                     </Form.Group>
                   </Form>
-                  <Button variant="danger" onClick={handleLogout}>
+                  <Button
+                    className="DDbtn"
+                    variant="danger"
+                    onClick={handleLogout}
+                  >
                     Logout
                   </Button>
                 </Card.Body>
