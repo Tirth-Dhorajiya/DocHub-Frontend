@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import api from "../axiosInterceptor";
 
 const UploadImage = ({ onUpload }) => {
   const [image, setImage] = useState(null);
@@ -13,7 +13,7 @@ const UploadImage = ({ onUpload }) => {
     formData.append("image", image);
 
     try {
-      const res = await axios.post("/api/upload", formData);
+      const res = await api.post("/upload", formData);
       onUpload(res.data.url);
     } catch (err) {
       console.error("Error uploading image:", err);

@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   Form,
@@ -10,10 +9,11 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import Header from "../common/Header/Header";
-import Footer from "../common/Footer/Footer";
+import api from "../axiosInterceptor";
+import { useUser } from "../UserContext";
 
 const DoctorLogin = () => {
+  const { setUser } = useUser();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
@@ -60,14 +60,12 @@ const DoctorLogin = () => {
     }
 
     try {
-      const response = await axios.post(
-        "https://doc-hub-backend.vercel.app/api/doctors/login",
-        formData
-      );
+      const response = await api.post("/doctors/login", formData);
 
       localStorage.setItem("doctorToken", response.data.token);
       localStorage.setItem("doctorId", response.data.doctor._id);
       localStorage.setItem("doctor", JSON.stringify({ email: formData.email }));
+      setUser({ email: formData.email }); // Set user context
       navigate("/doctor-dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed!");
@@ -76,7 +74,6 @@ const DoctorLogin = () => {
 
   return (
     <>
-      <Header />
       <Container className="d-flex justify-content-center align-items-center min-vh-100">
         <Card className="p-4 shadow-lg login-card" style={{ width: "400px" }}>
           <h3 className="text-center mb-3 fw-bold">Doctor Login</h3>
@@ -128,7 +125,6 @@ const DoctorLogin = () => {
           </Form>
         </Card>
       </Container>
-      <Footer />
     </>
   );
 };

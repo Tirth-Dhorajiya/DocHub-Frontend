@@ -1,13 +1,10 @@
 import React, { useState } from "react";
-import Header from "../../common/Header/Header";
-import Footer from "../../common/Footer/Footer";
 import { Col, Container, Row } from "react-bootstrap";
 import "./ContactUs.css";
 import { faqs } from "./Data/Faqs";
 import "./faq.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
-import ScrollToTop from "react-scroll-to-top";
 const Contact = () => {
   let [showAns, setShowAns] = useState(faqs[0].id);
   const [queryData, setQueryData] = useState({
@@ -34,7 +31,6 @@ const Contact = () => {
 
   return (
     <>
-      <Header />
       <Container>
         <h2 className="p-3 text-center fw-bold contact-heading fs-1">
           Let's start a conversation
@@ -150,8 +146,6 @@ const Contact = () => {
           })}
         </div>
       </Container>
-      <ScrollToTop smooth />
-      <Footer />
     </>
   );
 };

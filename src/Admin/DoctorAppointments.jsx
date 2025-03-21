@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Table, Container, Row, Col, Button } from "react-bootstrap";
 import { BeatLoader } from "react-spinners";
-import Header from "../common/Header/Header";
-import Footer from "../common/Footer/Footer";
+import api from "../axiosInterceptor";
 
 export default function DoctorAppointments() {
   const { doctorId } = useParams();
@@ -16,9 +14,7 @@ export default function DoctorAppointments() {
     const fetchAppointments = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `https://doc-hub-backend.vercel.app/api/appointments/doctor/${doctorId}`
-        );
+        const response = await api.get(`/appointments/doctor/${doctorId}`);
         const updatedAppointments = response.data.map((appointment) => {
           const appointmentDateTime = new Date(
             `${appointment.appointmentDate}T${appointment.timeSlot}`
@@ -39,9 +35,7 @@ export default function DoctorAppointments() {
     const fetchSlots = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `https://doc-hub-backend.vercel.app/api/slots/doctor/${doctorId}`
-        );
+        const response = await api.get(`/slots/doctor/${doctorId}`);
         const updatedSlots = response.data.map((slot) => {
           const slotDateTime = new Date(
             `${slot.appointmentDate}T${slot.timeSlot}`
@@ -88,7 +82,6 @@ export default function DoctorAppointments() {
 
   return (
     <>
-      <Header />
       <Container className="mt-5">
         {loading ? (
           <div
@@ -142,7 +135,6 @@ export default function DoctorAppointments() {
           </Row>
         )}
       </Container>
-      <Footer />
     </>
   );
 }

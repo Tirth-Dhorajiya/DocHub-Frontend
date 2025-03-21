@@ -1,15 +1,23 @@
-// import React, { useState, useEffect } from "react";
-// import Loader from "./Loader"; // Import the loading component
-// import Home from "./Home"; // Your main page
+import React from "react";
+import { ToastContainer } from "react-toastify";
+import { RouterProvider } from "react-router-dom";
+import { allRoutes } from "./Routes";
+import { UserProvider } from "./UserContext";
 
-// export default function App() {
-//   const [loading, setLoading] = useState(true);
+function App() {
+  allRoutes.subscribe(() => {
+    window.scrollTo(0, 0);
+  });
 
-//   useEffect(() => {
-//     setTimeout(() => {
-//       setLoading(false); // Stop loading after 2 seconds
-//     }, 2000);
-//   }, []);
+  return (
+    <>
+      <UserProvider>
+        <RouterProvider router={allRoutes} />
 
-//   return <>{loading ? <Loader /> : <Home />}</>;
-// }
+        <ToastContainer position="top-right" autoClose={3000} />
+      </UserProvider>
+    </>
+  );
+}
+
+export default App;

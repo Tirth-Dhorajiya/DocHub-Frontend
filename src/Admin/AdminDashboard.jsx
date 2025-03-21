@@ -9,13 +9,13 @@ import {
   Table,
 } from "react-bootstrap";
 import { toast, ToastContainer } from "react-toastify";
-import axios from "axios";
+import api from "../axiosInterceptor";
 import { useNavigate } from "react-router-dom";
-import Header from "../common/Header/Header";
-import Footer from "../common/Footer/Footer";
 import { BeatLoader } from "react-spinners";
+import { useUser } from "../UserContext";
 
 export default function AdminDashboard() {
+  const { logout } = useUser();
   const [message, setMessage] = useState("");
   const [doctors, setDoctors] = useState([]);
   const [show, setShow] = useState(false);
@@ -47,12 +47,9 @@ export default function AdminDashboard() {
       toast.success("Successfully Login");
 
       try {
-        const res = await axios.get(
-          "https://doc-hub-backend.vercel.app/api/admin/dashboard",
-          {
-            headers: { Authorization: `Bearer ${token}` },
-          }
-        );
+        const res = await api.get("/admin/dashboard", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
         setMessage(res.data.message);
       } catch (err) {
         console.error("Error fetching admin data:", err);
@@ -65,16 +62,13 @@ export default function AdminDashboard() {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("adminToken");
-    localStorage.removeItem("admin");
+    logout();
     navigate("/admin-login");
   };
   // Fetch Doctors from MongoDB
   const fetchDoctors = async () => {
     try {
-      const response = await axios.get(
-        "https://doc-hub-backend.vercel.app/api/doctors/getDoctors"
-      );
+      const response = await api.get("/doctors/getDoctors");
       setDoctors(response.data);
     } catch (error) {
       console.error("Error fetching doctors:", error);
@@ -92,9 +86,7 @@ export default function AdminDashboard() {
   const handleConfirmDelete = async () => {
     if (!doctorToDelete) return;
     try {
-      await axios.delete(
-        `https://doc-hub-backend.vercel.app/api/doctors/deleteDoctor/${doctorToDelete}`
-      );
+      await api.delete(`/doctors/deleteDoctor/${doctorToDelete}`);
       toast.success("Doctor deleted!");
       fetchDoctors();
     } catch (error) {
@@ -121,16 +113,10 @@ export default function AdminDashboard() {
 
     try {
       if (editingId) {
-        await axios.put(
-          `https://doc-hub-backend.vercel.app/api/doctors/updateDoctor/${editingId}`,
-          formDataToSend
-        );
+        await api.put(`/doctors/updateDoctor/${editingId}`, formDataToSend);
         toast.success("Doctor updated successfully!");
       } else {
-        await axios.post(
-          "https://doc-hub-backend.vercel.app/api/doctors/addDoctor",
-          formDataToSend
-        );
+        await api.post("/doctors/addDoctor", formDataToSend);
         toast.success("Doctor added successfully!");
       }
       setShow(false);
@@ -153,7 +139,6 @@ export default function AdminDashboard() {
 
   return (
     <>
-      <Header />
       <Container className="mt-5">
         <ToastContainer position="top-right" autoClose={2000} />
         {loading ? (
@@ -397,7 +382,6 @@ export default function AdminDashboard() {
           </Button>
         </Modal.Footer>
       </Modal>
-      <Footer />
     </>
   );
 }

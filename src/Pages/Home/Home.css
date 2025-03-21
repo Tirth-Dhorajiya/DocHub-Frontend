@@ -96,9 +96,6 @@ span {
 .subTitle4 {
   color: var(--secondary-color);
 }
-.appointmentSection {
-  margin-top: 80px;
-}
 .appointment-section {
   background-color: var(--primary-color);
   box-shadow: 5px 5px 18px 1px black;
@@ -152,8 +149,7 @@ span {
 }
 
 @media screen and (max-width: 426px) {
-  .appointment-section,
-  .appointmentSection {
+  .appointment-section {
     align-items: center;
   }
 }

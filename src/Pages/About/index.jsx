@@ -1,9 +1,6 @@
 import React, { useState } from "react";
-import Header from "../../common/Header/Header";
-import Footer from "../../common/Footer/Footer";
 import "./About.css";
 import { Col, Container, Row } from "react-bootstrap";
-import ScrollToTop from "react-scroll-to-top";
 import { abtBottomCard, abtUpperCard } from "../../Component/Cards/allCardData";
 import { AbtBottomCard, AbtUpperCard } from "../../Component/Cards/AllCard";
 export default function About() {
@@ -14,7 +11,6 @@ export default function About() {
   };
   return (
     <>
-      <Header />
       <div className="heading text-center mt-4 abt_title">
         <h1 className="fw-bold text-custom">About DocHub</h1>
 
@@ -112,8 +108,6 @@ export default function About() {
           ))}
         </Row>
       </Container>
-      <ScrollToTop smooth color="#028885" />
-      <Footer />
     </>
   );
 }

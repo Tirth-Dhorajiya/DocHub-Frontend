@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import {
   Table,
@@ -10,12 +9,13 @@ import {
   Form,
   Card,
 } from "react-bootstrap";
-import Footer from "../common/Footer/Footer";
-import Header from "../common/Header/Header";
 import "./DoctorDashboard.css";
 import { BeatLoader } from "react-spinners";
+import api from "../axiosInterceptor";
+import { useUser } from "../UserContext";
 
 export default function DoctorDashboard() {
+  const { logout } = useUser();
   const navigate = useNavigate();
   const [appointments, setAppointments] = useState([]);
   const [slots, setSlots] = useState([]);
@@ -42,9 +42,7 @@ export default function DoctorDashboard() {
       }
 
       try {
-        const response = await axios.get(
-          `https://doc-hub-backend.vercel.app/api/doctors/email/${doctorEmail}`
-        );
+        const response = await api.get(`/doctors/email/${doctorEmail}`);
         if (response.data) {
           setDoctorName(response.data.name);
           setDoctor({
@@ -72,9 +70,7 @@ export default function DoctorDashboard() {
       }
 
       try {
-        const response = await axios.get(
-          `https://doc-hub-backend.vercel.app/api/appointments/doctor/${doctorId}`
-        );
+        const response = await api.get(`/appointments/doctor/${doctorId}`);
         setAppointments(response.data);
       } catch (error) {
         console.error("Error fetching appointments:", error);
@@ -94,9 +90,7 @@ export default function DoctorDashboard() {
       }
 
       try {
-        const response = await axios.get(
-          `https://doc-hub-backend.vercel.app/api/slots/doctor/${doctorId}`
-        );
+        const response = await api.get(`/slots/doctor/${doctorId}`);
         setSlots(response.data);
       } catch (error) {
         console.error("Error fetching slots:", error);
@@ -111,9 +105,7 @@ export default function DoctorDashboard() {
   }, [navigate]);
 
   const handleLogout = () => {
-    localStorage.removeItem("doctor");
-    localStorage.removeItem("doctorId");
-    localStorage.removeItem("token");
+    logout();
     navigate("/doctor-login");
   };
 
@@ -140,7 +132,6 @@ export default function DoctorDashboard() {
   });
   return (
     <>
-      <Header />
       <Container className="dashboard-container">
         {loading ? (
           <div
@@ -347,7 +338,6 @@ export default function DoctorDashboard() {
           </Row>
         )}
       </Container>
-      <Footer />
     </>
   );
 }

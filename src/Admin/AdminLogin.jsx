@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { Form, Button, Alert, Container, Card } from "react-bootstrap";
 import { Eye, EyeSlash } from "react-bootstrap-icons"; // Import icons
-import Header from "../common/Header/Header";
+import api from "../axiosInterceptor";
+import { useUser } from "../UserContext";
 
 export default function AdminLogin() {
+  const { setUser } = useUser();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false); // State for password visibility
@@ -18,12 +19,10 @@ export default function AdminLogin() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post(
-        "https://doc-hub-backend.vercel.app/api/admin/login",
-        formData
-      );
+      const res = await api.post("/admin/login", formData);
       localStorage.setItem("adminToken", res.data.token);
       localStorage.setItem("admin", JSON.stringify({ email: formData.email }));
+      setUser({ email: formData.email });
       navigate("/admin-dashboard");
     } catch (err) {
       setError(err.response?.data?.message || "Login failed!");
@@ -36,7 +35,6 @@ export default function AdminLogin() {
 
   return (
     <>
-      <Header />
       <Container className="d-flex justify-content-center align-items-center min-vh-100">
         <Card className="p-4 shadow-lg login-card">
           <h3 className="text-center mb-3 fw-bold">Admin Login</h3>

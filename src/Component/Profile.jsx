@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import {
   Container,
   Card,
@@ -13,12 +12,13 @@ import {
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Header from "../common/Header/Header";
-import Footer from "../common/Footer/Footer";
 import ScrollToTop from "react-scroll-to-top";
 import { BeatLoader } from "react-spinners";
+import api from "../axiosInterceptor";
+import { useUser } from "../UserContext";
 
 const Profile = () => {
+  const { logout } = useUser();
   const userEmail = JSON.parse(localStorage.getItem("user"))?.email || "";
   const navigate = useNavigate();
   const [showModal, setShowModal] = useState(false);
@@ -42,18 +42,18 @@ const Profile = () => {
     if (userEmail) {
       setLoading(true); // Set loading to true before fetching data
 
-      axios
-        .get(`https://doc-hub-backend.vercel.app/api/user/${userEmail}`)
+      api
+        .get(`/user/${userEmail}`)
         .then((response) => setUserData(response.data))
         .catch((error) => console.error("Error fetching user data:", error));
 
-      axios
-        .get(`https://doc-hub-backend.vercel.app/api/appointments/${userEmail}`)
+      api
+        .get(`/appointments/${userEmail}`)
         .then((response) => setAppointments(response.data))
         .catch((error) => console.error("Error fetching appointments:", error));
 
-      axios
-        .get(`https://doc-hub-backend.vercel.app/api/slots/${userEmail}`) // Fetch slots
+      api
+        .get(`/slots/${userEmail}`) // Fetch slots
         .then((response) => setSlots(response.data))
         .catch((error) => console.error("Error fetching slots:", error))
         .finally(() => setLoading(false)); // Set loading to false after fetching data
@@ -102,14 +102,9 @@ const Profile = () => {
 
   const handleSave = async () => {
     try {
-      const response = await axios.put(
-        `https://doc-hub-backend.vercel.app/api/user/update/${userEmail}`,
-        userData
-      );
+      const response = await api.put(`/user/update/${userEmail}`, userData);
       console.log("Update response:", response.data);
-      const updatedResponse = await axios.get(
-        `https://doc-hub-backend.vercel.app/api/user/${userEmail}`
-      );
+      const updatedResponse = await api.get(`/user/${userEmail}`);
       setUserData(updatedResponse.data);
       localStorage.setItem("userData", JSON.stringify(updatedResponse.data)); // Save to localStorage
       toast.success("Your profile updated successfully!", {
@@ -121,17 +116,13 @@ const Profile = () => {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("userData"); // Clear userData from localStorage
+    logout();
     navigate("/signIn");
   };
 
   const handleCancelAppointment = async (appointmentId) => {
     try {
-      const response = await axios.delete(
-        `https://doc-hub-backend.vercel.app/api/appointments/${appointmentId}`
-      );
+      const response = await api.delete(`/appointments/${appointmentId}`);
       console.log("Delete response:", response.data);
       setAppointments(
         appointments.filter((appointment) => appointment._id !== appointmentId)
@@ -150,9 +141,7 @@ const Profile = () => {
 
   const handleCancelSlot = async (slotId) => {
     try {
-      const response = await axios.delete(
-        `https://doc-hub-backend.vercel.app/api/slots/${slotId}`
-      );
+      const response = await api.delete(`/slots/${slotId}`);
       console.log("Delete response:", response.data);
       setSlots(slots.filter((slot) => slot._id !== slotId));
       toast.success("Slot cancelled successfully!", {
@@ -198,7 +187,6 @@ const Profile = () => {
 
   return (
     <>
-      <Header />
       <ToastContainer />
 
       {loading ? (
@@ -353,11 +341,7 @@ const Profile = () => {
                           <td>{item.age}</td>
                           <td>{item.hospital}</td>
                           <td>{item.doctor?.name || "N/A"}</td>
-                          {/* <td>
-                            {appointments.includes(item)
-                              ? "Appointment"
-                              : "Slot"}
-                          </td> */}
+
                           <td>
                             {isPastAppointment(
                               item.appointmentDate,
@@ -484,7 +468,6 @@ const Profile = () => {
         </Modal.Footer>
       </Modal>
       <ScrollToTop smooth color="#028885" />
-      <Footer />
     </>
   );
 };

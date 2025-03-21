@@ -1,11 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
-import Header from "../../common/Header/Header";
 import { Col, Container, Row } from "react-bootstrap";
 import Slot from "./Slot";
-import Footer from "../../common/Footer/Footer";
 import { BeatLoader } from "react-spinners";
+import api from "../../axiosInterceptor";
 
 export default function Bookdetails() {
   const { id } = useParams(); // Get doctor ID from the URL
@@ -13,8 +11,8 @@ export default function Bookdetails() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios
-      .get(`https://doc-hub-backend.vercel.app/api/doctors/${id}`) // Fetch doctor details
+    api
+      .get(`/doctors/${id}`) // Fetch doctor details
       .then((response) => {
         setDoctor(response.data);
         setLoading(false);
@@ -25,17 +23,8 @@ export default function Bookdetails() {
       });
   }, [id]);
 
-  // if (loading)
-  //   return (
-  //     <BeatLoader
-  //       color="#6c63ff"
-  //       className="d-flex justify-content-center align-items-center vh-100"
-  //     />
-  //   );
-
   return (
     <>
-      <Header />
       {loading ? (
         <div
           className="d-flex justify-content-center align-items-center"
@@ -95,7 +84,6 @@ export default function Bookdetails() {
           <Slot doctor={doctor} />
         </>
       )}
-      <Footer />
     </>
   );
 }

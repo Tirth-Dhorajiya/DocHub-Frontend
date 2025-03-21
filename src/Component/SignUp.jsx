@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import {
   Form,
@@ -10,8 +9,7 @@ import {
   InputGroup,
 } from "react-bootstrap";
 import { BsEye, BsEyeSlash } from "react-icons/bs";
-import Header from "../common/Header/Header";
-import Footer from "../common/Footer/Footer";
+import api from "../axiosInterceptor";
 
 const Register = () => {
   const [email, setEmail] = useState("");
@@ -97,7 +95,7 @@ const Register = () => {
     }
 
     try {
-      await axios.post("https://doc-hub-backend.vercel.app/api/auth/register", {
+      await api.post("/auth/register", {
         email,
         password,
         age,
@@ -129,7 +127,6 @@ const Register = () => {
 
   return (
     <>
-      <Header />
       <Container className="d-flex justify-content-center align-items-center my-5 min-vh-100">
         <Card className="p-4 shadow-lg " style={{ width: "400px" }}>
           <h3 className="text-center mb-3 fw-bold">Create Account</h3>
@@ -240,7 +237,6 @@ const Register = () => {
           </Form>
         </Card>
       </Container>
-      <Footer />
     </>
   );
 };

@@ -1,7 +1,7 @@
 export const validateForm = (formData) => {
   let errors = {};
   const nameRegex = /^[A-Za-z\s]+$/;
-  const mobileRegex = /^[0-9]{10}$/;
+  const mobileRegex = /^(\+?\d{1,3}[-.\s]?)?\d{10}$/;
   const today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
 
   if (!nameRegex.test(formData.name)) {
@@ -34,10 +34,12 @@ export const validateForm = (formData) => {
     errors.timeSlot = "Please select a time slot.";
   }
 
-  if (!formData.gender) {
-    errors.gender = "Please select your gender.";
+  if (!["male", "female"].includes(formData.gender?.toLowerCase())) {
+    errors.gender = "Please select a valid gender.";
   }
-
+  if (formData.age < 0 || formData.age > 120) {
+    errors.age = "Please enter a valid age.";
+  }
   return errors;
 };
 
