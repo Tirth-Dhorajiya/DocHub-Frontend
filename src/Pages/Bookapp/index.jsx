@@ -12,7 +12,7 @@ import DownloadSection from "./DownloadSection";
 import { validateForm } from "./formUtils";
 import api from "../../axiosInterceptor";
 import AppointmentForm from "./AppointmentForm";
-import SuccessModal from "./SuccessModal";
+import SuccessModal from "../../Component/SuccessModal";
 
 export default function Bookapp() {
   const [searchQuery, setSearchQuery] = useState("");
@@ -275,7 +275,7 @@ export default function Bookapp() {
                     <h2 className="text-center p-4 fw-bold">
                       Book an Appointment
                     </h2>
-
+                    {/* Appointment Form start */}
                     <AppointmentForm
                       formData={formData}
                       errors={errors}
