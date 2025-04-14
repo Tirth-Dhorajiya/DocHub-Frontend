@@ -24,9 +24,18 @@
   cursor: pointer;
   font-weight: bold;
 }
+
 .day-text,
 .date-text {
   font-weight: normal;
   color: black;
   font-family: Arial, Helvetica, sans-serif;
+}
+
+.day-btn.selected .date-text {
+  color: white !important;
+}
+
+.w-210 {
+  width: 194px;
 }
