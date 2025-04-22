@@ -19,6 +19,7 @@ import DoctorLogin from './Component/DoctorLogin';
 import DoctorDashboard from './Component/DoctorDashboard';
 import Layout from './Layout';
 import BookingGuide from './Component/BookingGuide';
+import AdminQueries from './Admin/AdminQueries';
 
 export const allRoutes = createBrowserRouter([
 	{
@@ -43,6 +44,10 @@ export const allRoutes = createBrowserRouter([
 			{ path: 'admin/appointments/:doctorId', element: <DoctorAppointments /> },
 			{ path: 'doctor-login', element: <DoctorLogin /> },
 			{ path: 'doctor-dashboard', element: <DoctorDashboard /> },
+			{
+				path: 'admin/queries',
+				element: <AdminQueries />,
+			},
 			{ path: '*', element: <Eroor404 /> },
 		],
 	},

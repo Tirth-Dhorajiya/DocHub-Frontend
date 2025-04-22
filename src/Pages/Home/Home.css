@@ -3,32 +3,40 @@
   --secondary-color: #028885;
   --font-color: var(--font-color);
 }
+
 .text-custom {
   color: #007c9d !important;
 }
+
 ::-webkit-scrollbar {
   width: 10px;
 }
+
 ::-webkit-scrollbar-track {
   background: black;
 }
+
 ::-webkit-scrollbar-thumb {
   background: var(--primary-color);
   border-radius: 4px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: var(--secondary-color);
 }
+
 .hmspan {
   color: "#028885";
   font-family: Arial, Helvetica, sans-serif;
 }
+
 span {
   font-weight: bold;
   font-family: "Jua", Arial, Helvetica;
   font-size: larger;
   color: #015c5a;
 }
+
 .p_bg {
   position: absolute;
   margin-top: 270px;
@@ -45,9 +53,11 @@ span {
   color: var(--primary-color);
   font-weight: bold;
 }
+
 .one_click h3 {
   color: var(--primary-color);
 }
+
 .click_abt a {
   display: inline-block;
   color: var(--font-color);
@@ -71,16 +81,20 @@ span {
   background-color: #f5f8f9;
   margin-bottom: 40px;
 }
+
 .works h2 {
   font-size: 18px;
 }
+
 .works span {
   font-size: 30px;
   font-weight: bold;
 }
+
 .appoinImg {
   filter: drop-shadow(0 0 0.75rem rgb(69, 107, 232));
 }
+
 .eltd-separator ::after {
   content: "";
   /* clear: both; */
@@ -90,16 +104,20 @@ span {
   width: 70px;
   margin: 0 auto 4px;
 }
+
 .eltd-separator h2 {
   color: var(--primary-color);
 }
+
 .subTitle4 {
   color: var(--secondary-color);
 }
+
 .appointment-section {
   background-color: var(--primary-color);
   box-shadow: 5px 5px 18px 1px black;
 }
+
 .rowHeader ::after {
   content: "";
   clear: both;
@@ -109,6 +127,7 @@ span {
   width: 70px;
   margin: 10px 5px;
 }
+
 .notification {
   background-image: url("/public/images/assests/bgn-newsletter-subscribe.jpg");
   background-size: cover;
@@ -116,6 +135,7 @@ span {
   background-repeat: no-repeat;
   background-attachment: scroll;
 }
+
 .btnSubscribe {
   background-color: var(--primary-color);
   border-radius: 50px;
@@ -126,8 +146,22 @@ span {
   padding: 12px 15px;
   text-decoration: none;
 }
+
 .btnSubscribe:hover {
   background-color: var(--secondary-color);
+}
+
+.admin-filter .form-control,
+.admin-filter .form-select {
+  border: 1px solid var(--primary-color);
+}
+
+.admin-page.align-self-center {
+  font-family: Arial,
+    Helvetica,
+    sans-serif;
+  color: unset;
+  font-weight: unset;
 }
 
 @media (max-width: 768px) {
