@@ -8,6 +8,8 @@ import {
 	Form,
 	Table,
 	Modal,
+	ListGroup,
+	Badge,
 } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
@@ -25,6 +27,9 @@ const Profile = () => {
 	const [cancelType, setCancelType] = useState(null);
 	const [cancelId, setCancelId] = useState(null);
 	const [loading, setLoading] = useState(true); // Loading state
+	const [queries, setQueries] = useState([]);
+	const [selectedQuery, setSelectedQuery] = useState(null);
+	const [show, setShow] = useState(false);
 
 	const [userData, setUserData] = useState({
 		name: '',
@@ -40,7 +45,15 @@ const Profile = () => {
 
 	useEffect(() => {
 		if (userEmail) {
-			setLoading(true); // Set loading to true before fetching data
+			api
+				.get(`/queries`)
+				.then((response) => {
+					const userQueries = response.data.filter(
+						(q) => q.email === userEmail,
+					);
+					setQueries(userQueries);
+				})
+				.catch((error) => console.error('error fetching user queries', error));
 
 			api
 				.get(`/user/${userEmail}`)
@@ -184,6 +197,11 @@ const Profile = () => {
 		// If same date, sort by time
 		return a.timeSlot.localeCompare(b.timeSlot);
 	});
+
+	const handleShow = (query) => {
+		setSelectedQuery(query);
+		setShow(true);
+	};
 
 	return (
 		<>
@@ -501,6 +519,63 @@ const Profile = () => {
 					</Button>
 				</Modal.Footer>
 			</Modal>
+
+			<Container className='mt-4'>
+				<h3 className='text-center mb-4'>Your Queries</h3>
+				<ListGroup>
+					{queries.map((query) => (
+						<ListGroup.Item
+							key={query._id}
+							action
+							onClick={() => handleShow(query)}
+						>
+							{query.query}
+							<Badge
+								bg={query.adminResponse ? 'success' : 'warning'}
+								className='ms-2'
+							>
+								{query.adminResponse ? 'Responded' : 'Pending'}
+							</Badge>
+						</ListGroup.Item>
+					))}
+				</ListGroup>
+
+				{/* Modal for displaying query details */}
+				<Modal
+					show={show}
+					onHide={() => setShow(false)}
+					centered
+				>
+					<Modal.Header closeButton>
+						<Modal.Title>Query Details</Modal.Title>
+					</Modal.Header>
+					<Modal.Body>
+						{selectedQuery && (
+							<>
+								<p>
+									<strong>Query:</strong> {selectedQuery.query}
+								</p>
+								<p>
+									<strong>Admin Response:</strong>{' '}
+									{selectedQuery.adminResponse ? (
+										<Badge bg='success'>{selectedQuery.adminResponse}</Badge>
+									) : (
+										<Badge bg='warning text-dark'>Pending</Badge>
+									)}
+								</p>
+							</>
+						)}
+					</Modal.Body>
+					<Modal.Footer>
+						<Button
+							variant='secondary'
+							onClick={() => setShow(false)}
+						>
+							Close
+						</Button>
+					</Modal.Footer>
+				</Modal>
+			</Container>
 			<ScrollToTop
 				smooth
 				color='#028885'
